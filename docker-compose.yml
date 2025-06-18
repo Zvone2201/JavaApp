@@ -1,0 +1,55 @@
+version: "3.7"
+
+services:
+  javaapp:
+    build: .
+    container_name: javaapp
+    image: javaapp:latest
+    environment:
+      - MYSQL_HOST=mysql
+    ports:
+      - "8080:8080"
+    networks:
+      - rest-network
+    volumes:
+      - java-data:/app/uploads
+    depends_on:
+      - mysql
+
+  mysql:
+    container_name: mysql
+    image:  mysql:8.0.42
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci
+    environment:
+      - MYSQL_ROOT_PASSWORD=lozinka
+      - MYSQL_DATABASE=javaapp
+      - MYSQL_PASSWORD=lozinka
+    networks:
+      - rest-network
+    volumes:
+      - mysql-data:/var/lib/mysql
+    restart: always
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: my-phpmyadmin
+    environment:
+      PMA_HOST: mysql
+      PMA_USER: root
+      PMA_PASSWORD: lozinka
+    ports:
+      - "8081:80"
+    networks:
+      - rest-network
+    depends_on:
+      - mysql
+
+networks:
+  rest-network:
+    driver: bridge
+
+volumes:
+  mysql-data:
+  java-data:
+
+

@@ -9,8 +9,6 @@ RUN mvn clean package -DskipTests
 FROM eclipse-temurin:17-jdk-alpine
 WORKDIR /app
 
-# 🔧 Kopiraj slike iz lokalnog direktorija
-COPY public /app/public
 
 COPY --from=build /app/target/JavaApp-0.0.1-SNAPSHOT.jar app.jar
 EXPOSE 8080

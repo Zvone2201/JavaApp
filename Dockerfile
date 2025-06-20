@@ -9,10 +9,12 @@ RUN mvn clean package -DskipTests
 FROM eclipse-temurin:17-jdk-alpine
 WORKDIR /app
 
+RUN apk add --no-cache bash curl
+
 COPY wait-for-it.sh .
 COPY --from=build /app/target/JavaApp-0.0.1-SNAPSHOT.jar app.jar
 
 RUN chmod +x wait-for-it.sh
 
 EXPOSE 8080
-ENTRYPOINT ["./wait-for-it.sh", "mysql:3306", "--", "java", "-jar", "app.jar"]
+ENTRYPOINT ["bash", "wait-for-it.sh", "mysql:3306", "--", "java", "-jar", "app.jar"]

@@ -24,6 +24,7 @@ public class SecurityConfig {
                         .requestMatchers("/login").permitAll()
                         .requestMatchers("/logout").permitAll()
                         .requestMatchers("/images/**").permitAll()
+                        .requestMatchers("/static/**").permitAll()
                         .requestMatchers("/client/**").hasAnyRole("client", "admin")
                         .requestMatchers("/admin/**").hasRole("admin")
                         .anyRequest().authenticated()

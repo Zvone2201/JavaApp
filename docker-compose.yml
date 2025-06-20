@@ -26,7 +26,7 @@ services:
     networks:
       - rest-network
     volumes:
-      - java-data:/app/uploads
+      - java-images:/app/images
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
@@ -48,4 +48,4 @@ networks:
 
 volumes:
   mysql-data:
-  java-data:
+  java-images:
